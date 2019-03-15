@@ -4,6 +4,7 @@ import com.suikajy.rxjavanote.util.DemoUtils;
 import com.suikajy.rxjavanote.util.Sleeper;
 import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
 public class SubscriptionTest {
@@ -20,7 +21,12 @@ public class SubscriptionTest {
             });
             thread.start();
 
-            subscriber.add(Subscriptions.create(thread::interrupt));
+            subscriber.add(Subscriptions.create(new Action0() {
+                @Override
+                public void call() {
+                    thread.interrupt();
+                }
+            }));
         });
 
         Subscription subscription = observable.subscribe(s -> {

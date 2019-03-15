@@ -30,7 +30,7 @@ public interface DemoUtils {
             long counter = 1;
             while (counter < second) {
                 Sleeper.sleep();
-                emitter.onNext(counter);
+                emitter.onNext("已过"+counter+"秒");
                 counter += 1;
             }
             emitter.onCompleted();
